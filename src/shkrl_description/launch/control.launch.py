@@ -15,7 +15,7 @@ def launch_setup(context):
     nodes = []
 
     robot_state_publisher_node = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(PathJoinSubstitution([FindPackageShare("skrl_description"), "launch", "rsp.launch.py"])),
+        PythonLaunchDescriptionSource(PathJoinSubstitution([FindPackageShare("shkrl_description"), "launch", "rsp.launch.py"])),
         launch_arguments = {"robot_ip" : robot_ip}.items()
     )
     nodes.append(robot_state_publisher_node)
@@ -24,7 +24,7 @@ def launch_setup(context):
         package="ur_robot_driver",
         executable="ur_ros2_control_node",
         parameters = [
-            PathJoinSubstitution([FindPackageShare("skrl_description"), "config", f"{ur_series}_controllers.yaml"])
+            PathJoinSubstitution([FindPackageShare("shkrl_description"), "config", f"{ur_series}_controllers.yaml"])
         ],
         remappings = [(
             "~/robot_description", "/robot_description"
@@ -121,7 +121,7 @@ def launch_setup(context):
     elif ur_series == "e-series":
         frequency = 500.0
     commander_node = Node(
-        package = "skrl_description",
+        package = "shkrl_description",
         executable = "commander",
         output = "screen",
         parameters = [{
@@ -156,7 +156,7 @@ def generate_launch_description():
         ),
         DeclareLaunchArgument(
             "rviz_config",
-            default_value = PathJoinSubstitution([FindPackageShare("skrl_description"), "rviz", "view.rviz"]),
+            default_value = PathJoinSubstitution([FindPackageShare("shkrl_description"), "rviz", "view.rviz"]),
             description = "Rviz config file (absolute path) to use when launching rviz."
         ),
         OpaqueFunction(function=launch_setup)

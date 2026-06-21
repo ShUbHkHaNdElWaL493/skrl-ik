@@ -22,10 +22,10 @@ RUN wget https://download.pytorch.org/libtorch/cu132/libtorch-shared-with-deps-2
 
 ENV CMAKE_PREFIX_PATH=/opt/libtorch:$CMAKE_PREFIX_PATH
 
-WORKDIR /skrl
+WORKDIR /shkrl
 COPY ./src ./src
 
 RUN echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc
-RUN echo "source /skrl/install/setup.bash" >> ~/.bashrc
+RUN echo "source /shkrl/install/setup.bash" >> ~/.bashrc
 RUN source /opt/ros/humble/setup.bash && colcon build --packages-select skrl_msgs
-RUN source /opt/ros/humble/setup.bash && source /skrl/install/setup.bash && colcon build
+RUN source /opt/ros/humble/setup.bash && source /shkrl/install/setup.bash && colcon build

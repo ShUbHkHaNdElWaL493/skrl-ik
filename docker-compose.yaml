@@ -1,6 +1,6 @@
 networks:
   net:
-    name: skrl_net
+    name: shkrl_net
     driver: bridge
     ipam:
       config:
@@ -27,11 +27,11 @@ services:
     tty: true
     environment:
       - ROBOT_MODEL=${UR_MODEL}
-  skrl:
+  shkrl:
     build:
       context: .
-    image: skrl
-    container_name: skrl
+    image: shkrl
+    container_name: shkrl
     networks:
       net:
         ipv4_address: 192.168.56.64

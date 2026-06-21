@@ -14,21 +14,15 @@ def generate_launch_description():
     use_sim_time = LaunchConfiguration("use_sim_time")
 
     spawner_node = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(os.path.join(get_package_share_directory("description"), "launch", "robot.launch.py")),
+        PythonLaunchDescriptionSource(os.path.join(get_package_share_directory("shkrl_description"), "launch", "control.launch.py")),
         launch_arguments = {
             "use_sim_time" : use_sim_time
         }.items()
     )
 
-    commander_node = Node(
-        package = "control",
-        executable = "commander",
-        output = "screen"
-    )
-
-    train_node = Node(
-        package = "control",
-        executable = "train.py",
+    control_node = Node(
+        package = "shkrl_ik",
+        executable = "control.py",
         parameters = [{"use_sim_time" : use_sim_time}],
         output = "screen"
     )
@@ -40,6 +34,5 @@ def generate_launch_description():
             description = "Use simulation (Gazebo) clock if true"
         ),
         spawner_node,
-        commander_node,
-        train_node
+        control_node
     ])

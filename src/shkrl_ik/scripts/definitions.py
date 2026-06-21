@@ -6,7 +6,7 @@
 from ament_index_python import get_package_share_directory
 from collections import deque, namedtuple
 import gymnasium as gym
-from skrl_msgs.srv import Gripper
+from shkrl_msgs.srv import GetTCP
 import numpy as np
 import os
 import random

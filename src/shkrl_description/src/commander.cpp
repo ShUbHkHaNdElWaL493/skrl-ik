@@ -6,7 +6,7 @@
 #include <control_msgs/action/follow_joint_trajectory.hpp>
 #include <rclcpp/rclcpp.hpp>
 #include <rclcpp_action/rclcpp_action.hpp>
-#include <skrl_msgs/srv/get_tcp.hpp>
+#include <shkrl_msgs/srv/get_tcp.hpp>
 #include <tf2_ros/buffer.h>
 #include <tf2_ros/transform_listener.h>
 
@@ -16,12 +16,12 @@ class CommanderNode : public rclcpp::Node
     private:
 
     double dt;
-    rclcpp::Service<skrl_msgs::srv::GetTCP>::SharedPtr get_tcp_service;
+    rclcpp::Service<shkrl_msgs::srv::GetTCP>::SharedPtr get_tcp_service;
     rclcpp_action::Client<control_msgs::action::FollowJointTrajectory>::SharedPtr joints_client;
     std::unique_ptr<tf2_ros::Buffer> tf_buffer;
     std::shared_ptr<tf2_ros::TransformListener> tf_listener;
 
-    void get_tcp_callback(const std::shared_ptr<skrl_msgs::srv::GetTCP::Request> request, std::shared_ptr<skrl_msgs::srv::GetTCP::Response> response)
+    void get_tcp_callback(const std::shared_ptr<shkrl_msgs::srv::GetTCP::Request> request, std::shared_ptr<shkrl_msgs::srv::GetTCP::Response> response)
     {
 
         response->success = false;
@@ -106,7 +106,7 @@ class CommanderNode : public rclcpp::Node
         this->get_parameter("joint_controller", joint_controller);
         this->joints_client = rclcpp_action::create_client<control_msgs::action::FollowJointTrajectory>(this, joint_controller + "/follow_joint_trajectory");
 
-        this->get_tcp_service = this->create_service<skrl_msgs::srv::GetTCP>(
+        this->get_tcp_service = this->create_service<shkrl_msgs::srv::GetTCP>(
             "/get_tcp",
             std::bind(&CommanderNode::get_tcp_callback, this, std::placeholders::_1, std::placeholders::_2)
         );

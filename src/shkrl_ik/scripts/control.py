@@ -3,7 +3,7 @@
 #   CS22B1090
 #   Shubh Khandelwal
 
-from skrl_ik.scripts.definitions import DQNAgent, ManipulatorEnv
+from shkrl_ik.scripts.definitions import DQNAgent, ManipulatorEnv
 import numpy as np
 import rclpy
 import time
@@ -27,22 +27,19 @@ def main(args = None):
 
             episode_reward = 0
             done = False
-            epsilon = 1
             while not done:
-                action = model.act(state, epsilon)
+                action = model.act(state, epsilon = 0.01)
                 next_state, reward, terminated, truncated, info = manipulator_env.step(action)
                 episode_reward += reward
                 done = terminated or truncated
                 model.step(state, action, reward, next_state, done)
                 state = next_state
-                epsilon *= 0.99
 
             manipulator_env.get_logger().info(f"Episode: {episode + 1} | Steps: {manipulator_env.steps} | Reward: {episode_reward}")
             if terminated:
                 manipulator_env.get_logger().info("Episode terminated.")
             elif truncated:
                 manipulator_env.get_logger().info("Episode truncated.")
-            model.save()
             time.sleep(1)
 
     except Exception as e:

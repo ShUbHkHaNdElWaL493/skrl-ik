@@ -11,7 +11,7 @@ def generate_launch_description():
     robot_description = Command([
         PathJoinSubstitution([FindExecutable(name = "xacro")]),
         " ",
-        PathJoinSubstitution([FindPackageShare("skrl_description"), "models", "robot.urdf.xacro"]),
+        PathJoinSubstitution([FindPackageShare("shkrl_description"), "models", "robot.urdf.xacro"]),
         " ",
         "ur_type:=",
         PythonExpression(["'", EnvironmentVariable("UR_MODEL"), "'.lower()"]),

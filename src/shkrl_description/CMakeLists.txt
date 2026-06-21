@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.8)
-project(skrl_ik)
+project(shkrl_description)
 
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
@@ -7,21 +7,22 @@ endif()
 
 # find dependencies
 find_package(ament_cmake REQUIRED)
-find_package(Eigen3 REQUIRED)
-find_package(geometry_msgs REQUIRED)
+find_package(control_msgs REQUIRED)
 find_package(rclcpp REQUIRED)
-find_package(sensor_msgs REQUIRED)
-find_package(Torch REQUIRED)
+find_package(rclcpp_action REQUIRED)
+find_package(shkrl_msgs REQUIRED)
+find_package(tf2_ros REQUIRED)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${TORCH_CXX_FLAGS}")
+add_executable(commander src/commander.cpp)
+ament_target_dependencies(commander control_msgs rclcpp rclcpp_action shkrl_msgs tf2_ros)
 
 install(
-  DIRECTORY launch models
+  DIRECTORY config launch models rviz
   DESTINATION share/${PROJECT_NAME}
 )
 
 install(
-  PROGRAMS scripts/definitions.py scripts/control.py scripts/train.py
+  TARGETS commander
   DESTINATION lib/${PROJECT_NAME}
 )
 
